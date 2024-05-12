@@ -37,6 +37,7 @@ function App() {
       </AppBar>
 
      <Home />
+
     </div>  
   )
 }

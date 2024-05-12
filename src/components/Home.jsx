@@ -10,38 +10,39 @@ import { CardActionArea } from '@mui/material';
 const Home = () => {
 
     const [clinics, setClinics] = useState([]);
-
-
+  
     useEffect(() => {
         const GEO_API_URL = `https://api.geoapify.com/v2/places?categories=healthcare.hospital&filter=circle:78.4740613,17.360589,5000&bias=proximity:78.4740613,17.360589&limit=20&apiKey=8d3bbb9cb56248728d4751eb24464a1b`;
         axios.get(GEO_API_URL).then(res => {
-            const featureArr = res.data.features;
-            const name = [];
-            featureArr.map((feature) => name.push(feature.properties.name));
-            setClinics(name);
-            console.log(name);
+            console.log(res.data.features);
+            setClinics(res.data.features);          
         })
     }, [])
-
-
 
     return(
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
         {
-            clinics.map((clinic, index) => {
+            clinics.map((clinic) => {
                 return (
-                    <div key={index} style={{padding: 20}}>
-                    <Card sx={{ maxWidth: 385, mt: 5, border: '0.2px solid gray' }}>
+                    <div key={clinic.properties.datasource.raw.osm_id} style={{padding: 20}}>
+                    <Card style={{ maxWidth: 400, mt: 5, border: '0.2px solid gray', height: 180 }}>
                         <CardActionArea>                    
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {clinic}
+                                <Typography gutterBottom variant="h5" component="div">  
+                                    {clinic.properties.name}
                                 </Typography>
-                                <hr />
-                                <Typography variant="body2" color="text.secondary">
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                                    species, ranging across all continents except Antarctica
+                                <hr/>
+                                
+                                <Typography variant="body4" color="text.secondary" marginTop= '1rem'>
+                                   {clinic.properties.address_line2}
                                 </Typography>
+
+                                <Typography variant="body1" color="text.primary" marginTop= '10px'>
+                                    {clinic.properties.city}, {clinic.properties.state} 
+                                    {clinic.properties.datasource.raw.email && `, ${clinic.properties.datasource.raw.email}`}  
+                                    {clinic.properties.datasource.raw.website && `, ${clinic.properties.datasource.raw.website}`}   
+                                </Typography>
+                                
                             </CardContent>
                         </CardActionArea>
                     </Card>
