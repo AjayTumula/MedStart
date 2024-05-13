@@ -1,13 +1,13 @@
 
-
 import './App.css'
-import Hospital from './components/Home';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import medStartLogo from './assets/logomed.png';
 import Home from './components/Home';
+import { Routes, Route } from 'react-router-dom';
+import SelectHospital from './components/SelectHospital';
 
 function App() {
 
@@ -36,10 +36,12 @@ function App() {
         </Container>
       </AppBar>
 
-     <Home />
-
+      <Routes>
+        <Route path='/'  element={<Home />}/>
+        <Route path='/clinic/:id'  element= {<SelectHospital />}/>
+      </Routes>
     </div>  
   )
 }
 
-export default App
+export default App;
