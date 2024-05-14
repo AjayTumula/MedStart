@@ -21,8 +21,7 @@ function App() {
             setLatLng({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
-            })
-            console.log(latLng);
+            });
         })   
     }
 }, [])

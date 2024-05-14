@@ -16,7 +16,7 @@ const Home = ({latLng}) => {
 
     useEffect(() => {
         if (Object.keys(latLng).length > 0) {
-            const GEO_API_URL = `https://api.geoapify.com/v2/places?categories=healthcare.hospital&filter=circle:78.491684,17.387140,5000&bias=proximity:78.4740613,17.360589&limit=20&apiKey=8d3bbb9cb56248728d4751eb24464a1b`;
+            const GEO_API_URL = `https://api.geoapify.com/v2/places?categories=healthcare.hospital&filter=circle:${latLng.longitude},${latLng.latitude},5000&bias=proximity:78.4740613,17.360589&limit=20&apiKey=8d3bbb9cb56248728d4751eb24464a1b`;
             axios.get(GEO_API_URL).then(res => {
             // console.log(res.data.features);
             setClinics(res.data.features);          
