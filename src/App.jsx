@@ -8,8 +8,24 @@ import medStartLogo from './assets/logomed.png';
 import Home from './components/Home';
 import { Routes, Route } from 'react-router-dom';
 import SelectHospital from './components/SelectHospital';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+
+  const [latLng, setLatLng]  = useState({});
+
+  useEffect(() => {
+    if("geolocation" in navigator){
+        navigator.geolocation.getCurrentPosition((position) => {
+            setLatLng({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            })
+            console.log(latLng);
+        })   
+    }
+}, [])
 
   return (
     <div>
@@ -37,8 +53,8 @@ function App() {
       </AppBar>
 
       <Routes>
-        <Route path='/'  element={<Home />}/>
-        <Route path='/clinic/:id'  element= {<SelectHospital />}/>
+        <Route path='/'  element={<Home latLng={latLng}/>}/>
+        <Route path='/clinic/:id'  element= {<SelectHospital latLng={latLng}/>}/>
       </Routes>
     </div>  
   )

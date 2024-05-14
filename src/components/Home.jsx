@@ -7,26 +7,13 @@ import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-const Home = () => {
+const Home = ({latLng}) => {
 
     const [clinics, setClinics] = useState([]);
-    const [latLng, setLatLng]  = useState({});
+    
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if("geolocation" in navigator){
-            navigator.geolocation.getCurrentPosition((position) => {
-                setLatLng({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                })
-                console.log(latLng);
-            })
-            
-        }
-    }, [])
 
-  
     useEffect(() => {
         if (Object.keys(latLng).length > 0) {
             const GEO_API_URL = `https://api.geoapify.com/v2/places?categories=healthcare.hospital&filter=circle:78.491684,17.387140,5000&bias=proximity:78.4740613,17.360589&limit=20&apiKey=8d3bbb9cb56248728d4751eb24464a1b`;
